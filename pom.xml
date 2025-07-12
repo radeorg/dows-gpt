@@ -39,7 +39,7 @@
         <module>gpt-config</module>
         <module>gpt-core</module>
         <module>gpt-handler</module>
-        <module>gpt-service</module>
+        <module>gpt-dao</module>
         <module>gpt-rest</module>
         <module>gpt-feign</module>
         <module>gpt-api</module>
@@ -112,7 +112,7 @@
                  <version>${project.version}</version>
              </dependency>-->
             <dependency>
-                <artifactId>gpt-service</artifactId>
+                <artifactId>gpt-dao</artifactId>
                 <groupId>org.dows.cloud</groupId>
                 <version>${project.version}</version>
             </dependency>
@@ -195,6 +195,13 @@
                 <groupId>org.bouncycastle</groupId>
                 <artifactId>bcpkix-jdk15on</artifactId>
                 <version>1.70</version>
+            </dependency>
+
+
+            <dependency>
+                <groupId>io.github.openfeign.form</groupId>
+                <artifactId>feign-form</artifactId>
+                <version>3.8.0</version>
             </dependency>
 
         </dependencies>

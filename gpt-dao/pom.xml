@@ -7,12 +7,15 @@
         <version>${revision}</version>
     </parent>
 
-    <artifactId>gpt-service</artifactId>
+    <artifactId>gpt-dao</artifactId>
 
 
     <dependencies>
 
-        
+        <dependency>
+            <groupId>org.dows.framework</groupId>
+            <artifactId>rade-core</artifactId>
+        </dependency>
 
     </dependencies>
 </project> 

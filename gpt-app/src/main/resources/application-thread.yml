@@ -1,0 +1,6 @@
+dows:
+  thread-pool:
+    mail-processing:
+      core-pool-size: 5
+      max-pool-size: 10
+      queue-capacity: 25

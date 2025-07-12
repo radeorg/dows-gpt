@@ -17,18 +17,23 @@
 
         <dependency>
             <groupId>org.dows.cloud</groupId>
-            <artifactId>gpt-core</artifactId>
-        </dependency>
-
-       <!-- <dependency>
-            <groupId>org.dows.cloud</groupId>
-            <artifactId>gpt-api</artifactId>
+            <artifactId>gpt-dao</artifactId>
         </dependency>
 
         <dependency>
             <groupId>org.dows.cloud</groupId>
             <artifactId>gpt-core</artifactId>
-        </dependency>-->
+        </dependency>
+
+        <!-- <dependency>
+             <groupId>org.dows.cloud</groupId>
+             <artifactId>gpt-api</artifactId>
+         </dependency>
+
+         <dependency>
+             <groupId>org.dows.cloud</groupId>
+             <artifactId>gpt-core</artifactId>
+         </dependency>-->
 
 
         <dependency>
@@ -48,10 +53,10 @@
             <artifactId>okhttp</artifactId>
         </dependency>
 
-<!--        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-websocket</artifactId>
-        </dependency>-->
+        <!--        <dependency>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-websocket</artifactId>
+                </dependency>-->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-websocket</artifactId>
