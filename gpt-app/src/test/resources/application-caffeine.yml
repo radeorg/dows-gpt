@@ -1,0 +1,45 @@
+#dows:
+#  cache:
+#    type: caffeine
+#    modules:
+#      vac:
+#        # 全局配置
+#        cacheName: vacNoticeCache:oneVacNotice
+#        spec: maximumSize=500,expireAfterWrite=604800s
+#        # 自定义配置，cacheName相同可覆盖全局配置
+#        configs:
+#          - cacheName: vacNoticeCache:oneVacNotice
+#            spec: expireAfterWrite=0s #设置该cache-name不过期
+spring:
+  # caffeine 缓存
+  cache:
+    type: caffeine
+    file: assets/cache
+
+---
+#开发环境
+spring:
+  config:
+    activate:
+      on-profile: dev
+
+---
+#开发环境
+spring:
+  config:
+    activate:
+      on-profile: sit
+
+---
+#开发环境
+spring:
+  config:
+    activate:
+      on-profile: uat
+
+---
+#开发环境
+spring:
+  config:
+    activate:
+      on-profile: prd

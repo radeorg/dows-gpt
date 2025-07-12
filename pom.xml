@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <!--<parent>
+        <artifactId>dows-parent</artifactId>
+        <groupId>org.dows.framework</groupId>
+        <version>20240120-SNAPSHOT</version>
+    </parent>-->
+    <parent>
+        <groupId>org.dows.framework</groupId>
+        <artifactId>rade-parent</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>dows-gpt</artifactId>
+    <groupId>org.dows.cloud</groupId>
+    <version>${revision}</version>
+    <packaging>pom</packaging>
+
+    <properties>
+        <revision>1.0.0-SNAPSHOT</revision>
+        <uim.version>1.0.0-SNAPSHOT</uim.version>
+        <aac.version>1.0.0-SNAPSHOT</aac.version>
+        <amp.version>1.0.0-SNAPSHOT</amp.version>
+        <dows-oss.version>1.0.0-SNAPSHOT</dows-oss.version>
+        <mybatis-flex.ext.version>1.10.8.110</mybatis-flex.ext.version>
+        <spring-ai.version>1.0.0-M6</spring-ai.version>
+        <spring-cloud-dependencies.version>2024.0.1</spring-cloud-dependencies.version>
+
+        <jdk.version>21</jdk.version>
+    </properties>
+
+
+    <modules>
+        <module>gpt-app</module>
+        <module>gpt-biz</module>
+        <module>gpt-boot</module>
+        <module>gpt-config</module>
+        <module>gpt-core</module>
+        <module>gpt-handler</module>
+        <module>gpt-service</module>
+        <module>gpt-rest</module>
+        <module>gpt-feign</module>
+        <module>gpt-api</module>
+    </modules>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <artifactId>gpt-api</artifactId>
+                <groupId>org.dows.cloud</groupId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <artifactId>gpt-app</artifactId>
+                <groupId>org.dows.cloud</groupId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <artifactId>gpt-biz</artifactId>
+                <groupId>org.dows.cloud</groupId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <artifactId>gpt-boot</artifactId>
+                <groupId>org.dows.cloud</groupId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <artifactId>gpt-cache</artifactId>
+                <groupId>org.dows.cloud</groupId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <artifactId>gpt-config</artifactId>
+                <groupId>org.dows.cloud</groupId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <artifactId>gpt-feign</artifactId>
+                <groupId>org.dows.cloud</groupId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <artifactId>gpt-handler</artifactId>
+                <groupId>org.dows.cloud</groupId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <artifactId>gpt-core</artifactId>
+                <groupId>org.dows.cloud</groupId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <!-- <dependency>
+                 <artifactId>gpt-entity</artifactId>
+                 <groupId>org.dows.gpt</groupId>
+                 <version>${project.version}</version>
+             </dependency>
+             <dependency>
+                 <artifactId>gpt-mapper</artifactId>
+                 <groupId>org.dows.gpt</groupId>
+                 <version>${project.version}</version>
+             </dependency>-->
+            <dependency>
+                <artifactId>gpt-service</artifactId>
+                <groupId>org.dows.cloud</groupId>
+                <version>${project.version}</version>
+            </dependency>
+
+
+            <dependency>
+                <artifactId>gpt-rest</artifactId>
+                <groupId>org.dows.cloud</groupId>
+                <version>${project.version}</version>
+            </dependency>
+
+
+            <dependency>
+                <groupId>org.dows.cloud</groupId>
+                <artifactId>uim-api</artifactId>
+                <version>${uim.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.dows.cloud</groupId>
+                <artifactId>uim-feign</artifactId>
+                <version>${uim.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.dows.cloud</groupId>
+                <artifactId>aac-api</artifactId>
+                <version>${aac.version}</version>
+            </dependency>
+
+            <dependency>
+                <artifactId>amp-api</artifactId>
+                <groupId>org.dows.cloud</groupId>
+                <version>${amp.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.dows.cloud</groupId>
+                <artifactId>oss-api</artifactId>
+                <version>${dows-oss.version}</version>
+            </dependency>
+
+
+            <dependency>
+                <groupId>org.aspectj</groupId>
+                <artifactId>aspectjweaver</artifactId>
+                <version>${aspectj.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.sun.mail</groupId>
+                <artifactId>jakarta.mail</artifactId>
+                <version>2.0.1</version>
+            </dependency>
+
+            <!--<dependency>
+                <groupId>com.tangzc</groupId>
+                <artifactId>mybatis-flex-ext-spring-boot3-starter</artifactId>
+                <version>${mybatis-flex.ext.version}</version>
+            </dependency>-->
+
+            <dependency>
+                <groupId>org.springframework.ai</groupId>
+                <artifactId>spring-ai-bom</artifactId>
+                <version>${spring-ai.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>transmittable-thread-local</artifactId>
+                <version>2.14.2</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.bouncycastle</groupId>
+                <artifactId>bcprov-jdk15on</artifactId>
+                <version>1.70</version>
+            </dependency>
+            <dependency>
+                <groupId>org.bouncycastle</groupId>
+                <artifactId>bcpkix-jdk15on</artifactId>
+                <version>1.70</version>
+            </dependency>
+
+        </dependencies>
+    </dependencyManagement>
+
+    <distributionManagement>
+        <repository>
+            <id>2290151-snapshot-aLhHBl</id>
+            <url>https://packages.aliyun.com/634f4de0327f73640e96c28d/maven/2290151-snapshot-alhhbl</url>
+        </repository>
+        <snapshotRepository>
+            <id>2290151-snapshot-aLhHBl</id>
+            <url>https://packages.aliyun.com/634f4de0327f73640e96c28d/maven/2290151-snapshot-alhhbl</url>
+        </snapshotRepository>
+    </distributionManagement>
+
+</project>
