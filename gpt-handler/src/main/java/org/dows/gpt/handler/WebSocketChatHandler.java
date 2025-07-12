@@ -1,12 +1,12 @@
 package org.dows.gpt.handler;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.dows.gpt.client.LLMClientFactory;
 import org.dows.gpt.session.SessionUser;
 import org.dows.gpt.token.JwtTokenProvider;
 import org.dows.gpt.utils.JsonUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;
@@ -20,19 +20,14 @@ import java.util.List;
 import java.util.Map;
 
 
+@Slf4j
+@RequiredArgsConstructor
 @Component
 public class WebSocketChatHandler extends TextWebSocketHandler implements ChatHandler {
-
-    final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private final JwtTokenProvider jwtTokenProvider;
 
     private final LLMClientFactory LLMClientFactory;
-
-    public WebSocketChatHandler(LLMClientFactory LLMClientFactory, JwtTokenProvider jwtTokenProvider) {
-        this.LLMClientFactory = LLMClientFactory;
-        this.jwtTokenProvider = jwtTokenProvider;
-    }
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws IOException {
@@ -52,19 +47,19 @@ public class WebSocketChatHandler extends TextWebSocketHandler implements ChatHa
 
         // 3、校验 Token
         if (!validToken(token)) {
-            logger.warn("WebSocket 连接失败，Token 无效：{}", session.getId());
+            log.warn("WebSocket 连接失败，Token 无效：{}", session.getId());
             session.close(CloseStatus.NOT_ACCEPTABLE);
             return;
         }
 
-        logger.info("WebSocket 连接成功，用户身份验证通过：{}", session.getId());
+        log.info("WebSocket 连接成功，用户身份验证通过：{}", session.getId());
     }
 
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
         // json: modelType , message
         String userMessage = message.getPayload();
-        logger.info("用户发送消息：{}", userMessage);
+        log.info("用户发送消息：{}", userMessage);
         try {
             Map map = JsonUtils.toMap(userMessage);
             String modelType = (String) map.get("modelType");
@@ -73,13 +68,13 @@ public class WebSocketChatHandler extends TextWebSocketHandler implements ChatHa
             LLMClientFactory.getClient(modelType).streamChat(prompt, session);
         } catch (Exception e) {
             session.sendMessage(new TextMessage("AI 服务异常，请稍后重试。"));
-            logger.error(e.getMessage(), e);
+            log.error(e.getMessage(), e);
         }
     }
 
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) {
-        logger.info("WebSocket 连接关闭：{}", session.getId());
+        log.info("WebSocket 连接关闭：{}", session.getId());
     }
 
     /**

@@ -1,14 +1,14 @@
 package org.dows.gpt.open;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.dows.gpt.api.ChatApi;
 import org.dows.gpt.client.DeepSeekR1Client;
 import org.dows.gpt.request.ChatRequest;
 import org.dows.gpt.service.ChatService;
 import org.dows.gpt.session.SessionUser;
 import org.dows.gpt.token.JwtTokenProvider;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -17,25 +17,20 @@ import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-
+@RequiredArgsConstructor
+@Slf4j
 @RestController
-@RequestMapping("/api/ai")
-public class ChatRest {
+public class ChatRest implements ChatApi {
 
-    @Autowired
-    private ChatService chatService;
+    private final ChatService chatService;
 
-    @Autowired
-    private JwtTokenProvider jwtTokenProvider;
+    private final JwtTokenProvider jwtTokenProvider;
 
     private final DeepSeekR1Client deepSeekR1Client;
+
     private final ExecutorService executor = Executors.newFixedThreadPool(5);
 
-    public ChatRest(@Qualifier("deepSeekR1Client") DeepSeekR1Client deepSeekR1Client) {
-        this.deepSeekR1Client = deepSeekR1Client;
-    }
-
-    @GetMapping("/chat")
+    @GetMapping("/v1/api/ai/chat")
     public ModelAndView chat(ModelAndView modelAndView, @RequestParam(value = "modelType", defaultValue = "deepseek") String modelType) {
         // 默认模型类型
         modelAndView.addObject("modelType", modelType);
@@ -44,7 +39,7 @@ public class ChatRest {
         return modelAndView;
     }
 
-    @PostMapping("/chat")
+    //@PostMapping("/chat")
     public ResponseEntity<String> chat(@RequestBody ChatRequest request, @RequestHeader("Authorization") String token) {
         // 认证中心解析 JWT 验证权限
         SessionUser sessionUser = jwtTokenProvider.validateUserToken(token);
@@ -54,7 +49,7 @@ public class ChatRest {
         return ResponseEntity.ok(chatService.chat(request));
     }
 
-    @GetMapping(value = "/chat/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    //@GetMapping(value = "/chat/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public SseEmitter streamChat(@RequestParam String prompt) {
         SseEmitter emitter = new SseEmitter();
         executor.execute(() -> {

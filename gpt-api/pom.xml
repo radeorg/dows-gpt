@@ -9,10 +9,18 @@
     <artifactId>gpt-api</artifactId>
 
     <dependencies>
+
+        <dependency>
+            <groupId>org.dows.framework</groupId>
+            <artifactId>rade-api</artifactId>
+        </dependency>
+
+
         <dependency>
             <groupId>org.springframework</groupId>
-            <artifactId>spring-web</artifactId>
+            <artifactId>spring-webmvc</artifactId>
         </dependency>
+
         <dependency>
             <groupId>io.swagger.core.v3</groupId>
             <artifactId>swagger-annotations-jakarta</artifactId>
@@ -21,10 +29,8 @@
             <groupId>io.swagger.core.v3</groupId>
             <artifactId>swagger-models-jakarta</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.dows.framework</groupId>
-            <artifactId>rade-api</artifactId>
-        </dependency>
+
+
 
     </dependencies>
 </project>
