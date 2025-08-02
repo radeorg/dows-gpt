@@ -16,7 +16,7 @@ spring:
     name: dows-gpt
     appId: 1
   profiles:
-    include: mysql,apidoc,mybatis,caffeine,ai,thread,hrm,oss,feign
+    include: mysql,apidoc,mybatis,caffeine,ai,thread,hrm,oss,feign,llm
     active: dev
 
   jackson:

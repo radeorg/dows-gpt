@@ -5,16 +5,16 @@ springdoc:
   swagger-ui:
     #自定义swagger前端请求路径，输入http：127.0.0.1:8080/doc会自动重定向到swagger-ui.html页面
     path: /doc
-    packages-to-scan: org.dows.hrm
+    packages-to-scan: org.dows.gpt
   group-configs:
-    - group: hrm-base
-      packagesToScan: org.dows.hrm.base
-    - group: hrm-admin
-      packagesToScan: org.dows.hrm.admin
-    - group: hrm-tenant
-      packagesToScan: org.dows.hrm.tenant
-    - group: hrm-user
-      packagesToScan: org.dows.hrm.user
+    - group: gpt-open
+      packagesToScan: org.dows.gpt.open
+    - group: gpt-admin
+      packagesToScan: org.dows.gpt.admin
+    - group: gpt-tenant
+      packagesToScan: org.dows.gpt.tenant
+    - group: gpt-user
+      packagesToScan: org.dows.gpt.user
 
 ---
 #开发环境

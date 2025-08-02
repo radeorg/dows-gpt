@@ -6,9 +6,7 @@ import org.dows.gpt.api.ChatApi;
 import org.dows.gpt.client.DeepSeekR1Client;
 import org.dows.gpt.request.ChatRequest;
 import org.dows.gpt.service.ChatService;
-import org.dows.gpt.session.SessionUser;
 import org.dows.gpt.token.JwtTokenProvider;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -40,12 +38,7 @@ public class ChatRest implements ChatApi {
     }
 
     //@PostMapping("/chat")
-    public ResponseEntity<String> chat(@RequestBody ChatRequest request, @RequestHeader("Authorization") String token) {
-        // 认证中心解析 JWT 验证权限
-        SessionUser sessionUser = jwtTokenProvider.validateUserToken(token);
-        if (sessionUser == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized");
-        }
+    public ResponseEntity<String> chat(@RequestBody ChatRequest request) {
         return ResponseEntity.ok(chatService.chat(request));
     }
 

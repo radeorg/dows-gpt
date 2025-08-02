@@ -26,7 +26,7 @@ public class OpenAIClient implements LLMClient {
     }
 
     @Override
-    public String chat(String prompt) {
+    public String chat(String prompt, String content) {
         LlmClientConfig config = clientsProperties.getClients().get(getType());
 
         Map<String, Object> payload = new HashMap<String, Object>() {{

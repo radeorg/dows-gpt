@@ -16,10 +16,13 @@ public class TenantFilter implements Filter {
     
     // 匹配类似 http://xxx.com/ddd/... 或 http://xxx.com/ddd 的路径
     private static final Pattern ORG_PATH_PATTERN = Pattern.compile("^.*?/([^/]+)(.*)$");
-
+    private static final Pattern ORG_PATH_PATTERN1 = Pattern.compile("^/([^/]+)(.*)$");
     public static void main(String[] args) {
 
-        Matcher matcher =  ORG_PATH_PATTERN.matcher("http://www.dev.hioas.com/ddd/abc/ddd/deee");
+        Matcher matcher =  ORG_PATH_PATTERN1.matcher("/ddd/abc/ddd/deee");
+
+        //Matcher matcher = ORG_PATH_PATTERN1.matcher("/ddd/abc/ddd/deee");
+
         if(matcher.matches()) {
             String organization = matcher.group(1);
             String identifier = matcher.group(2);

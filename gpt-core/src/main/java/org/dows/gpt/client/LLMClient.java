@@ -9,7 +9,7 @@ public interface LLMClient {
 
     String getType();
 
-    String chat(String prompt);
+    String chat(String prompt, String content);
 
     void streamChat(String prompt, WebSocketSession session);
 

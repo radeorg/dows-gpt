@@ -104,7 +104,7 @@ public class LocalLLMClient implements LLMClient {
         );
     }
 
-    public String chat(String prompt) {
+    public String chat(String prompt, String content) {
 
         LlmClientConfig config = clientsProperties.getClients().get(getType());
 

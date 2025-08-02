@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.tuple.Pair;
 import org.dows.gpt.enums.ModelTypeEnum;
+import org.dows.gpt.prompt.PromptTemplate;
 import org.dows.gpt.yml.LlmClientConfig;
 import org.dows.gpt.yml.LlmClientsProperties;
 import org.springframework.http.*;
@@ -23,7 +24,6 @@ import java.util.*;
 /**
  * DeepSeek AI 客户端
  * https://api-docs.deepseek.com/zh-cn/
- *
  */
 @Slf4j
 @Component
@@ -43,7 +43,7 @@ public class DeepSeekR1Client implements LLMClient {
     }
 
     @Override
-    public String chat(String prompt) {
+    public String chat(String prompt, String content) {
         LlmClientConfig config = clientsProperties.getClients().get(getType());
         HttpHeaders headers = buildHeaders(config);
         Map<String, Object> body = buildBody(config, prompt);
@@ -119,7 +119,7 @@ public class DeepSeekR1Client implements LLMClient {
                                 }
                             }
                         }
-                    } else  {
+                    } else {
                         session.sendMessage(new TextMessage(
                                 "{\"type\":\"DONE\",\"data\":\"\"}"
                         ));
@@ -230,7 +230,7 @@ public class DeepSeekR1Client implements LLMClient {
 
     private String extractContent(String responseBody) {
         try {
-            ObjectMapper objectMapper = new ObjectMapper();
+            //ObjectMapper objectMapper = new ObjectMapper();
             JsonNode root = objectMapper.readTree(responseBody);
             return root.path("choices").get(0).path("message").path("content").asText();
         } catch (Exception e) {
@@ -250,14 +250,17 @@ public class DeepSeekR1Client implements LLMClient {
         Map<String, Object> body = new HashMap<>();
         body.put("model", config.getModel()); // deepseek-v3 / deepseek-r1
         body.put("temperature", 1.0); // 可调整温度（默认推荐值 1.0）
-        body.put("max_tokens", 2048); // 控制回复长度
+        body.put("max_tokens", 8192); // 控制回复长度
 
-        List<Map<String, String>> messages = Collections.singletonList(
-                new HashMap<String, String>() {{
-                    put("role", "user");
-                    put("content", prompt);
-                }}
-        );
+        List<Map<String, String>> messages = new ArrayList<>();
+        messages.add(new HashMap<>() {{
+            put("role", "system");
+            put("content", PromptTemplate.EXTRACT_PROMPT);
+        }});
+        messages.add(new HashMap<>() {{
+            put("role", "user");
+            put("content", prompt);
+        }});
         body.put("messages", messages);
         return body;
     }

@@ -9,7 +9,7 @@ import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 public interface ChatApi {
 
     @PostMapping("/v1/open/gpt/chat")
-    ResponseEntity<String> chat(@RequestBody ChatRequest request, @RequestHeader("Authorization") String token);
+    ResponseEntity<String> chat(@RequestBody ChatRequest request);
 
     @GetMapping(value = "/v1/open/gpt/chat/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     SseEmitter streamChat(@RequestParam String prompt);
