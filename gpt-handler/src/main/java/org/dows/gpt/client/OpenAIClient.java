@@ -26,7 +26,7 @@ public class OpenAIClient implements LLMClient {
     }
 
     @Override
-    public String chat(String prompt, String content) {
+    public String chat(String sysPrompt, String userPrompt) {
         LlmClientConfig config = clientsProperties.getClients().get(getType());
 
         Map<String, Object> payload = new HashMap<String, Object>() {{
@@ -34,7 +34,7 @@ public class OpenAIClient implements LLMClient {
             put("messages", Collections.singletonList(
                     new HashMap<String, Object>() {{
                         put("role", "user");
-                        put("content", prompt);
+                        put("content", sysPrompt);
                     }}
             ));
             put("temperature", 0.7);
@@ -53,7 +53,7 @@ public class OpenAIClient implements LLMClient {
     }
 
     @Override
-    public void streamChat(String prompt, WebSocketSession session) {
+    public void streamChat(String sysPrompt, String userPrompt, WebSocketSession session) {
         // Optional: 可实现 SSE 方式调用
         //return "Stream not supported yet";
     }

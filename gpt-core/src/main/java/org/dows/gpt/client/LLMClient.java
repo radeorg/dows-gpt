@@ -9,9 +9,9 @@ public interface LLMClient {
 
     String getType();
 
-    String chat(String prompt, String content);
+    String chat(String sysPrompt, String userPrompt);
 
-    void streamChat(String prompt, WebSocketSession session);
+    void streamChat(String sysPrompt, String userPrompt, WebSocketSession session);
 
     boolean supports(String modelType);
 

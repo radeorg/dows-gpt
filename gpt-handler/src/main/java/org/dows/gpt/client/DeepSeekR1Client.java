@@ -1,12 +1,12 @@
 package org.dows.gpt.client;
 
+import cn.hutool.core.util.StrUtil;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.tuple.Pair;
 import org.dows.gpt.enums.ModelTypeEnum;
-import org.dows.gpt.prompt.PromptTemplate;
 import org.dows.gpt.yml.LlmClientConfig;
 import org.dows.gpt.yml.LlmClientsProperties;
 import org.springframework.http.*;
@@ -43,10 +43,10 @@ public class DeepSeekR1Client implements LLMClient {
     }
 
     @Override
-    public String chat(String prompt, String content) {
+    public String chat(String sysPrompt, String userPrompt) {
         LlmClientConfig config = clientsProperties.getClients().get(getType());
         HttpHeaders headers = buildHeaders(config);
-        Map<String, Object> body = buildBody(config, prompt);
+        Map<String, Object> body = buildBody(config, sysPrompt, userPrompt);
         HttpEntity<Map<String, Object>> request = new HttpEntity<>(body, headers);
         ResponseEntity<String> response = restTemplate.exchange(config.getApiUrl(), HttpMethod.POST, request, String.class);
         return extractContent(response.getBody());
@@ -56,16 +56,16 @@ public class DeepSeekR1Client implements LLMClient {
      * 通过 WebSocket 逐步返回 AI 生成的内容
      */
     @Override
-    public void streamChat(String prompt, WebSocketSession session) {
+    public void streamChat(String sysPrompt, String userPrompt, WebSocketSession session) {
         LlmClientConfig config = clientsProperties.getClients().get(getType());
         HttpHeaders headers = buildHeaders(config);
-        Map<String, Object> body = buildBody(config, prompt);
+        Map<String, Object> body = buildBody(config, sysPrompt, "");
         // 流式
         body.put("stream", true);
         List<Map<String, String>> messages = Collections.singletonList(
                 new HashMap<String, String>() {{
                     put("role", "user");
-                    put("content", prompt);
+                    put("content", sysPrompt);
                 }}
         );
         body.put("messages", messages);
@@ -138,7 +138,7 @@ public class DeepSeekR1Client implements LLMClient {
     public void streamChatSEE(String prompt, SseEmitter emitter) {
         LlmClientConfig config = clientsProperties.getClients().get(getType());
         HttpHeaders headers = buildHeaders(config);
-        Map<String, Object> body = buildBody(config, prompt);
+        Map<String, Object> body = buildBody(config, prompt, "");
         // 流式
         body.put("stream", true);
         List<Map<String, String>> messages = Collections.singletonList(
@@ -246,20 +246,22 @@ public class DeepSeekR1Client implements LLMClient {
         return headers;
     }
 
-    public Map<String, Object> buildBody(LlmClientConfig config, String prompt) {
+    public Map<String, Object> buildBody(LlmClientConfig config, String sysPrompt, String userPrompt) {
         Map<String, Object> body = new HashMap<>();
         body.put("model", config.getModel()); // deepseek-v3 / deepseek-r1
         body.put("temperature", 1.0); // 可调整温度（默认推荐值 1.0）
         body.put("max_tokens", 8192); // 控制回复长度
 
         List<Map<String, String>> messages = new ArrayList<>();
-        messages.add(new HashMap<>() {{
-            put("role", "system");
-            put("content", PromptTemplate.EXTRACT_PROMPT);
-        }});
+        if (StrUtil.isNotBlank(sysPrompt)) {
+            messages.add(new HashMap<>() {{
+                put("role", "system");
+                put("content", sysPrompt);
+            }});
+        }
         messages.add(new HashMap<>() {{
             put("role", "user");
-            put("content", prompt);
+            put("content", userPrompt);
         }});
         body.put("messages", messages);
         return body;

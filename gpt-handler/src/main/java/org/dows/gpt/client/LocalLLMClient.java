@@ -39,7 +39,7 @@ public class LocalLLMClient implements LLMClient {
     }
 
     @Override
-    public void streamChat(String prompt, WebSocketSession session) {
+    public void streamChat(String sysPrompt, String userPrompt, WebSocketSession session) {
         LlmClientConfig config = clientsProperties.getClients().get(getType());
         // 1. 构建请求头（Ollama 不需要认证头，只需 Content-Type）
         HttpHeaders headers = new HttpHeaders();
@@ -48,7 +48,7 @@ public class LocalLLMClient implements LLMClient {
         // 2. 构建请求体（Ollama 的格式与 OpenAI 不同）
         Map<String, Object> body = new HashMap<>();
         body.put("model", config.getModel()); // 指定本地模型
-        body.put("prompt", prompt);                 // 直接使用 prompt 字段
+        body.put("prompt", sysPrompt);                 // 直接使用 prompt 字段
         body.put("stream", true);                   // 启用流式
 
         // 3. 使用 RequestCallback 发送请求
@@ -104,14 +104,14 @@ public class LocalLLMClient implements LLMClient {
         );
     }
 
-    public String chat(String prompt, String content) {
+    public String chat(String sysPrompt, String userPrompt) {
 
         LlmClientConfig config = clientsProperties.getClients().get(getType());
 
         RestTemplate restTemplate = new RestTemplate();
 
         Map<String, String> requestBody = new HashMap<>();
-        requestBody.put("prompt", prompt);
+        requestBody.put("prompt", sysPrompt);
 
         ResponseEntity<String> response = restTemplate.postForEntity(config.getApiUrl(), requestBody, String.class);
         return response.getBody();

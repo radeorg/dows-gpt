@@ -53,16 +53,16 @@ public class DeepSeekV3Client extends DeepSeekR1Client {
      * 通过 WebSocket 逐步返回 AI 生成的内容
      */
     @Override
-    public void streamChat(String prompt, WebSocketSession session) {
+    public void streamChat(String sysPrompt, String userPrompt, WebSocketSession session) {
         LlmClientConfig config = clientsProperties.getClients().get(getType());
         HttpHeaders headers = buildHeaders(config);
-        Map<String, Object> body = buildBody(config, prompt);
+        Map<String, Object> body = buildBody(config, sysPrompt,null);
         // 流式
         body.put("stream", true);
         List<Map<String, String>> messages = Collections.singletonList(
                 new HashMap<String, String>() {{
                     put("role", "user");
-                    put("content", prompt);
+                    put("content", sysPrompt);
                 }}
         );
         body.put("messages", messages);

@@ -65,7 +65,7 @@ public class WebSocketChatHandler extends TextWebSocketHandler implements ChatHa
             String modelType = (String) map.get("modelType");
             String prompt = (String) map.get("message");
             // 调用 AI 大模型接口，并流式返回消息
-            LLMClientFactory.getClient(modelType).streamChat(prompt, session);
+            LLMClientFactory.getClient(modelType).streamChat(null, prompt, session);
         } catch (Exception e) {
             session.sendMessage(new TextMessage("AI 服务异常，请稍后重试。"));
             log.error(e.getMessage(), e);

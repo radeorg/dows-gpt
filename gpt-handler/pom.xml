@@ -35,6 +35,10 @@
              <artifactId>gpt-core</artifactId>
          </dependency>-->
 
+        <dependency>
+            <groupId>org.dows.cloud</groupId>
+            <artifactId>oss-api</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>

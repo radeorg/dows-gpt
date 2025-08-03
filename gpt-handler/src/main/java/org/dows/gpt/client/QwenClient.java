@@ -9,12 +9,12 @@ public class QwenClient implements LLMClient{
     }
 
     @Override
-    public String chat(String prompt, String content) {
+    public String chat(String sysPrompt, String userPrompt) {
         return "";
     }
 
     @Override
-    public void streamChat(String prompt, WebSocketSession session) {
+    public void streamChat(String sysPrompt, String userPrompt, WebSocketSession session) {
 
     }
 
