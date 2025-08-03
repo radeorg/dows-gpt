@@ -20,6 +20,13 @@
         </dependency>
 
         <dependency>
+            <groupId>org.dows.framework</groupId>
+            <artifactId>oss-tencent</artifactId>
+        </dependency>
+
+
+
+        <dependency>
             <groupId>com.zaxxer</groupId>
             <artifactId>HikariCP</artifactId>
         </dependency>

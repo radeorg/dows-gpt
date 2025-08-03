@@ -16,7 +16,7 @@ import java.util.List;
 @EnableAutoTable // 开启自动建表
 @EnableAsync // 开启异步处理
 @EnableCaching // 开启缓存
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = {"org.dows.gpt", "org.dows.rade","org.dows.oss"})
 //@EnableFeignClients() //开启Feign客户端
 //@EnableFeignClients(basePackages={"org.dows.uim.feign","org.dows.uim.api"})
 public class GptApplication {
