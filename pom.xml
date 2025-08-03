@@ -153,13 +153,6 @@
             </dependency>
 
             <dependency>
-                <groupId>org.dows.cloud</groupId>
-                <artifactId>oss-boot</artifactId>
-                <version>${dows-oss.version}</version>
-            </dependency>
-
-
-            <dependency>
                 <groupId>org.aspectj</groupId>
                 <artifactId>aspectjweaver</artifactId>
                 <version>${aspectj.version}</version>

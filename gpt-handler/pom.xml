@@ -41,6 +41,16 @@
         </dependency>
 
         <dependency>
+            <groupId>org.dows.framework</groupId>
+            <artifactId>oss-boot</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.dows.framework</groupId>
+            <artifactId>oss-tencent</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
         </dependency>
