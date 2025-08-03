@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class ChatRequest {
 
-    // 数据协议oss,http,text,json,xml
+    // 数据协议oss,http
     private String protocol;
     // 用户输入的内容
     private String content;

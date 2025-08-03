@@ -32,7 +32,21 @@ public class ChatService {
 
     public String chat(ChatRequest request) {
         String userPrompt = request.getContent();
-        if(StrUtil.isBlank(userPrompt)) {
+        if (StrUtil.equals(request.getProtocol(), "oss")) {
+            try {
+                request.setContent(fileUploaderApi.downloadFile(userPrompt));
+            } catch (Exception e) {
+                throw new RuntimeException("oss协议下文件下载失败", e);
+            }
+        } else if (StrUtil.equals(request.getProtocol(), "http")) {
+            try {
+                request.setContent(fileUploaderApi.downloadFile(userPrompt));
+            } catch (Exception e) {
+                throw new RuntimeException("http协议下文件下载失败", e);
+            }
+        }
+
+        if (StrUtil.isBlank(request.getContent())) {
             request.setContent("""
                     李四
                     男 | 年龄：25岁 | 籍贯：北京 | 共产党员 | 18794434244
@@ -61,14 +75,12 @@ public class ChatService {
                     """);
         }
 
-        if(request.getContent().equalsIgnoreCase("oss")){
-            //request.setContent(fileUploaderApi.uploadFile(null));
-        }
+
         String modelType = request.getModelType();
         // 会话历史
         //ChatSession session = getOrCreateSession(request);
         //List<ChatMessage> history = chatMessageService.findLastMessages(session.getId(), 10);
-        userPrompt = buildPrompt(null, userPrompt);
+        userPrompt = buildPrompt(null, request.getContent());
         LLMClient client = llmClientFactory.getClient(modelType);
         if (client == null) {
             return "不支持的模型类型：" + modelType;

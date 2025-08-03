@@ -23,7 +23,7 @@
         <uim.version>1.0.0-SNAPSHOT</uim.version>
         <aac.version>1.0.0-SNAPSHOT</aac.version>
         <amp.version>1.0.0-SNAPSHOT</amp.version>
-        <dows-oss.version>1.0.0-SNAPSHOT</dows-oss.version>
+        <dows-oss.version>1.0.1-SNAPSHOT</dows-oss.version>
         <mybatis-flex.ext.version>1.10.8.110</mybatis-flex.ext.version>
         <spring-ai.version>1.0.0-M6</spring-ai.version>
         <spring-cloud-dependencies.version>2024.0.1</spring-cloud-dependencies.version>
@@ -149,6 +149,12 @@
             <dependency>
                 <groupId>org.dows.cloud</groupId>
                 <artifactId>oss-api</artifactId>
+                <version>${dows-oss.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.dows.cloud</groupId>
+                <artifactId>oss-boot</artifactId>
                 <version>${dows-oss.version}</version>
             </dependency>
 
