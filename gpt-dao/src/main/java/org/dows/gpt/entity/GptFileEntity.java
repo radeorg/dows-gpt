@@ -40,18 +40,15 @@ public class GptFileEntity extends BaseEntity<GptFileEntity> {
      * 组织树ID
      */
     private Long orgTreeId;
+
     /**
-     * 简历文件ID
+     * JD名
      */
-    private Long resumeFileId;
+    private String jdName;
     /**
-     * 文件路径
+     * 简历文件名
      */
-    private String filePath;
-    /**
-     * 文件扩展名
-     */
-    private String fileExt;
+    private String fileName;
     /**
      * 应用ID
      */

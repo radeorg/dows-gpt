@@ -12,6 +12,7 @@ import org.dows.gpt.request.ChatSession;
 import org.dows.gpt.utils.TikTokenUtils;
 import org.dows.oss.api.FileUploaderApi;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.List;
@@ -30,6 +31,9 @@ public class ChatService {
     private final ChatMessageService chatMessageService;
 
     private final FileUploaderApi fileUploaderApi;
+
+    private final AsyncGptRecorder asyncGptRecorder;
+
 
     public String chat(ChatRequest request) {
         String userPrompt = request.getContent();
@@ -92,6 +96,17 @@ public class ChatService {
         // todo 计量计费
         Long inputToken = TikTokenUtils.tokens(request.getPrompt(), userPrompt);
         Long outputToken = TikTokenUtils.tokens(modelType,answer);
+
+        asyncGptRecorder.recordAndMaybeLock(
+                request.getAppId(),
+                request.getOperatorId(),
+                request.getJdName(),
+                request.getFileName(),
+                request.getOrgRootId(),
+                request.getOrgTreeId(),
+                inputToken,
+                outputToken
+        );
 
 
         //todo 保留QA

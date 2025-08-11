@@ -30,6 +30,9 @@ public class GptLockEntity extends BaseEntity<GptLockEntity> {
      */
     @Id(keyType = KeyType.Generator, value = KeyGenerators.snowFlakeId)
     private Long gptLockId;
+
+    /** 已使用 token 数 */
+    private Long usedTokens;
     /**
      * token数
      */
@@ -42,6 +45,7 @@ public class GptLockEntity extends BaseEntity<GptLockEntity> {
      * 结束时间
      */
     private Date endTime;
+
     /**
      * 是否锁定
      */

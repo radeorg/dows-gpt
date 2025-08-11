@@ -18,4 +18,27 @@ public class ChatRequest {
 
     private String userId;
     private String sessionId;
+
+    /**
+     * 组织根ID
+     */
+    private Long orgRootId;
+    /**
+     * 组织树ID
+     */
+    private Long orgTreeId;
+
+    /**
+     * JD名
+     */
+    private String jdName;
+    /**
+     * 简历文件名
+     */
+    private String fileName;
+
+    /**
+     * 操作者ID
+     */
+    private Long operatorId;
 }
