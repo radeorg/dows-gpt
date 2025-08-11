@@ -13,4 +13,9 @@ public interface ChatApi {
 
     @GetMapping(value = "/v1/open/gpt/chat/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     SseEmitter streamChat(@RequestParam String prompt);
+
+//    @PostMapping("/v1/open/gpt/count")
+//    ResponseEntity<String> count(@RequestBody ChatRequest request);
+
+
 }

@@ -9,6 +9,7 @@ import org.dows.gpt.prompt.PromptTemplate;
 import org.dows.gpt.request.ChatMessage;
 import org.dows.gpt.request.ChatRequest;
 import org.dows.gpt.request.ChatSession;
+import org.dows.gpt.utils.TikTokenUtils;
 import org.dows.oss.api.FileUploaderApi;
 import org.springframework.stereotype.Service;
 
@@ -81,15 +82,17 @@ public class ChatService {
         //ChatSession session = getOrCreateSession(request);
         //List<ChatMessage> history = chatMessageService.findLastMessages(session.getId(), 10);
         userPrompt = buildPrompt(null, request.getContent());
+
         LLMClient client = llmClientFactory.getClient(modelType);
         if (client == null) {
             return "不支持的模型类型：" + modelType;
         }
-        String answer = client.chat(request.getPrompt(), userPrompt);
 
+        String answer = client.chat(request.getPrompt(), userPrompt);
         // todo 计量计费
-        //int inputTokens = ChatTokenUtil.count(prompt);
-        //int outputTokens = ChatTokenUtil.count(answer);
+        Long inputToken = TikTokenUtils.tokens(request.getPrompt(), userPrompt);
+        Long outputToken = TikTokenUtils.tokens(modelType,answer);
+
 
         //todo 保留QA
         //chatMessageService.insert(new ChatMessageEntity("", "", prompt, "user", inputTokens, modelType));

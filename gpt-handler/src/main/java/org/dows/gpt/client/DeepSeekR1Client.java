@@ -42,6 +42,8 @@ public class DeepSeekR1Client implements LLMClient {
         return ModelTypeEnum.DEEPSEEK_R1.getCode();
     }
 
+
+
     @Override
     public String chat(String sysPrompt, String userPrompt) {
         LlmClientConfig config = clientsProperties.getClients().get(getType());
@@ -50,6 +52,10 @@ public class DeepSeekR1Client implements LLMClient {
         HttpEntity<Map<String, Object>> request = new HttpEntity<>(body, headers);
         ResponseEntity<String> response = restTemplate.exchange(config.getApiUrl(), HttpMethod.POST, request, String.class);
         return extractContent(response.getBody());
+
+        // todo 统计token
+        //ModelTypeEnum.DEEPSEEK_R1.getDecoder()
+        //return result;
     }
 
     /**
