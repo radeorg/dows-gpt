@@ -42,6 +42,11 @@ public class ChatRest implements ChatApi {
         return ResponseEntity.ok(chatService.chat(request));
     }
 
+    public ResponseEntity<Integer> getLocked(@RequestParam String appId){
+        return ResponseEntity.ok(chatService.getLocked(appId));
+
+    }
+
     //@GetMapping(value = "/chat/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public SseEmitter streamChat(@RequestParam String prompt) {
         SseEmitter emitter = new SseEmitter();
@@ -52,4 +57,5 @@ public class ChatRest implements ChatApi {
         });
         return emitter;
     }
+
 }

@@ -116,6 +116,10 @@ public class ChatService {
         return answer;
     }
 
+    public Integer getLocked(String appId){
+        return asyncGptRecorder.getLocked(appId);
+    }
+
 
     /**
      * 构建提示词

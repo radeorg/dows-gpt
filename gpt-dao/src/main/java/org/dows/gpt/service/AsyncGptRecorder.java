@@ -82,9 +82,9 @@ public class AsyncGptRecorder {
             gptTokenService.save(tokenEntity);
 
             // 3) 原子更新 GptLock（如果存在）
-            GptLockEntity lock = gptLockMapper.selectByAppId(appId);
+            Integer lock = gptLockMapper.selectByAppId(appId);
             if (lock != null) {
-                int rows = gptLockMapper.atomicAddUsedTokens(appId, delta, operatorId);
+                int rows = gptLockMapper.atomicAddUsedTokens(appId);
                 if (rows > 0) {
                     log.info("appId={} usedTokens += {}，原子更新成功。", appId, delta);
                 } else {
@@ -101,5 +101,9 @@ public class AsyncGptRecorder {
             log.error("异步记录 GptFile/GptToken/GptLock 出错", e);
             // 根据你业务需要也可以把失败信息写入一个失败表，用于重试或告警
         }
+    }
+
+    Integer getLocked(String appId){
+        return gptLockMapper.selectByAppId(appId);
     }
 }

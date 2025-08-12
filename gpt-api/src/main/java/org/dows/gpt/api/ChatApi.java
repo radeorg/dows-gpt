@@ -14,6 +14,9 @@ public interface ChatApi {
     @GetMapping(value = "/v1/open/gpt/chat/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     SseEmitter streamChat(@RequestParam String prompt);
 
+    @GetMapping(value = "/v1/open/gpt/chat/locked", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    ResponseEntity<Integer> getLocked(@RequestParam String appId);
+
 //    @PostMapping("/v1/open/gpt/count")
 //    ResponseEntity<String> count(@RequestBody ChatRequest request);
 
