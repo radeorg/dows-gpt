@@ -94,7 +94,7 @@ public class ChatService {
 
         String answer = client.chat(request.getPrompt(), userPrompt);
         // todo 计量计费
-        Long inputToken = TikTokenUtils.tokens(request.getPrompt(), userPrompt);
+        Long inputToken = TikTokenUtils.tokens(modelType, userPrompt);
         Long outputToken = TikTokenUtils.tokens(modelType,answer);
 
         asyncGptRecorder.recordAndMaybeLock(

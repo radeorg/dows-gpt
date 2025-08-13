@@ -23,7 +23,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Schema(name = "账号标识表")
-@Table(value = "account_identifier", onUpdate = AutoFillDataListener.class, onInsert = AutoFillDataListener.class)
+@Table(value = "gpt_file", onUpdate = AutoFillDataListener.class, onInsert = AutoFillDataListener.class)
 
 public class GptFileEntity extends BaseEntity<GptFileEntity> {
     /**
