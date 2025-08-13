@@ -1,71 +1,62 @@
 package org.dows.gpt.entity;
 
-import com.mybatisflex.annotation.Id;
-import com.mybatisflex.annotation.KeyType;
-import com.mybatisflex.annotation.Table;
+import com.mybatisflex.annotation.*;
 import com.mybatisflex.core.keygen.KeyGenerators;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
-import org.dows.rade.crud.AutoFillDataListener;
 import org.dows.rade.crud.BaseEntity;
 
 import java.util.Date;
 
-/**
- * 租户锁(TenantLock)实体类
- *
- * @author lait.zhang@gmail.com
- * @since 2025-08-10 17:51:18
- */
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Schema(name = "锁表")
-@Table(value = "gpt_lock", onUpdate = AutoFillDataListener.class, onInsert = AutoFillDataListener.class)
+@Schema(name = "GPT锁表")
+@Table(value = "gpt_lock")
 public class GptLockEntity extends BaseEntity<GptLockEntity> {
-    /**
-     * 租户锁Id
-     */
+
+    @Schema(description = "锁ID")
     @Id(keyType = KeyType.Generator, value = KeyGenerators.snowFlakeId)
+    @Column(value = "gpt_lock_id")
     private Long gptLockId;
 
-    /** 已使用 token 数 */
+    @Schema(description = "已使用 token 数")
+    @Column(value = "used_tokens")
     private Long usedTokens;
-    /**
-     * token数
-     */
+
+    @Schema(description = "token 数")
+    @Column(value = "token_size")
     private Long tokenSize;
-    /**
-     * 开始时间
-     */
+
+    @Schema(description = "开始时间")
+    @Column(value = "start_time")
     private Date startTime;
-    /**
-     * 结束时间
-     */
+
+    @Schema(description = "结束时间")
+    @Column(value = "end_time")
     private Date endTime;
 
-    /**
-     * 是否锁定
-     */
+    @Schema(description = "是否锁定")
+    @Column(value = "locked")
     private Integer locked;
-    /**
-     * 应用ID
-     */
-    private String appId;
-    /**
-     * 时间戳
-     */
-    private Date ts;
-    /**
-     * 更新时间
-     */
-    private Date ut;
-    /**
-     * 操作者ID
-     */
-    private Long operatorId;
 
+    @Schema(description = "应用ID")
+    @Column(value = "app_id", tenantId = true)
+    private String appId;
+
+    @Schema(description = "时间戳")
+    @Column(value = "ts")
+    private Date ts;
+
+    @Schema(description = "更新时间")
+    @Column(value = "ut")
+    private Date ut;
+
+    @Schema(description = "操作者ID")
+    @Column(value = "operator_id")
+    private Long operatorId;
 }
+
 

@@ -1,66 +1,58 @@
 package org.dows.gpt.entity;
 
-import com.mybatisflex.annotation.Table;
+import com.mybatisflex.annotation.*;
+import com.mybatisflex.core.keygen.KeyGenerators;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
-import org.dows.rade.crud.AutoFillDataListener;
 import org.dows.rade.crud.BaseEntity;
 
 import java.util.Date;
 
-/**
- * token(GptToken)实体类
- *
- * @author lait.zhang@gmail.com
- * @since 2025-08-10 17:39:03
- */
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Schema(name = "账号标识表")
-@Table(value = "gpt_token", onUpdate = AutoFillDataListener.class, onInsert = AutoFillDataListener.class)
-
+@Schema(name = "GPT Token表")
+@Table(value = "gpt_token")
 public class GptTokenEntity extends BaseEntity<GptTokenEntity> {
-    /**
-     * 统计tokenID
-     */
+
+    @Schema(description = "统计tokenID")
+    @Id(keyType = KeyType.Generator, value = KeyGenerators.snowFlakeId)
+    @Column(value = "count_token_id")
     private Long countTokenId;
-    /**
-     * 统计文件ID
-     */
+
+    @Schema(description = "统计文件ID")
+    @Column(value = "count_file_id")
     private Long countFileId;
-    /**
-     * 输入token
-     */
+
+    @Schema(description = "输入token")
+    @Column(value = "input_token")
     private Long inputToken;
-    /**
-     * 输出token
-     */
+
+    @Schema(description = "输出token")
+    @Column(value = "output_token")
     private Long outputToken;
-    /**
-     * 应用ID
-     */
+
+    @Schema(description = "应用ID")
+    @Column(value = "app_id", tenantId = true)
     private String appId;
-    /**
-     * 操作者ID
-     */
+
+    @Schema(description = "操作者ID")
+    @Column(value = "operator_id")
     private Long operatorId;
-    /**
-     * 逻辑删除 0未删除 1删除
-     */
+
+    @Schema(description = "逻辑删除 0未删除 1删除")
+    @Column(value = "deleted", isLogicDelete = true)
     private Integer deleted;
-    /**
-     * 操作时间
-     */
+
+    @Schema(description = "操作时间")
+    @Column(value = "ts")
     private Date ts;
-    /**
-     * 更新时间
-     */
+
+    @Schema(description = "更新时间")
+    @Column(value = "ut")
     private Date ut;
-
-
-
 }
+
 
