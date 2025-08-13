@@ -1,18 +1,23 @@
 package org.dows.gpt.service;
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.StrUtil;
+import com.mybatisflex.core.query.QueryWrapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.dows.gpt.client.LLMClient;
 import org.dows.gpt.client.LLMClientFactory;
+import org.dows.gpt.entity.GptLockEntity;
 import org.dows.gpt.prompt.PromptTemplate;
 import org.dows.gpt.request.ChatMessage;
 import org.dows.gpt.request.ChatRequest;
 import org.dows.gpt.request.ChatSession;
+import org.dows.gpt.response.GptLockResponse;
 import org.dows.gpt.utils.TikTokenUtils;
 import org.dows.oss.api.FileUploaderApi;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.HashMap;
 import java.util.List;
@@ -33,6 +38,8 @@ public class ChatService {
     private final FileUploaderApi fileUploaderApi;
 
     private final AsyncGptRecorder asyncGptRecorder;
+
+    private final GptLockService gptLockService;
 
 
     public String chat(ChatRequest request) {
@@ -118,6 +125,14 @@ public class ChatService {
 
     public Integer getLocked(String appId){
         return asyncGptRecorder.getLocked(appId);
+    }
+
+    public GptLockResponse statistics( String appId){
+        GptLockEntity entity = gptLockService.getOne(QueryWrapper.create()
+                .eq(GptLockEntity::getAppId, appId)
+                .eq(GptLockEntity::getDeleted, 0)
+        );
+        return BeanUtil.copyProperties(entity, GptLockResponse.class);
     }
 
 

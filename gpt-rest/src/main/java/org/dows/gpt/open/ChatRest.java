@@ -5,13 +5,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.dows.gpt.api.ChatApi;
 import org.dows.gpt.client.DeepSeekR1Client;
 import org.dows.gpt.request.ChatRequest;
+import org.dows.gpt.response.GptLockResponse;
 import org.dows.gpt.service.ChatService;
 import org.dows.gpt.token.JwtTokenProvider;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
-
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -47,6 +47,10 @@ public class ChatRest implements ChatApi {
 
     }
 
+    public ResponseEntity<GptLockResponse> statistics(@RequestParam String appId){
+        return ResponseEntity.ok(chatService.statistics(appId));
+    }
+
     //@GetMapping(value = "/chat/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public SseEmitter streamChat(@RequestParam String prompt) {
         SseEmitter emitter = new SseEmitter();
@@ -57,5 +61,7 @@ public class ChatRest implements ChatApi {
         });
         return emitter;
     }
+
+
 
 }

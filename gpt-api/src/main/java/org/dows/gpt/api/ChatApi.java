@@ -1,6 +1,7 @@
 package org.dows.gpt.api;
 
 import org.dows.gpt.request.ChatRequest;
+import org.dows.gpt.response.GptLockResponse;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +17,9 @@ public interface ChatApi {
 
     @GetMapping(value = "/v1/open/gpt/chat/locked", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     ResponseEntity<Integer> getLocked(@RequestParam String appId);
+
+    @GetMapping(value = "/v1/open/gpt/chat/statistics", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    ResponseEntity<GptLockResponse> statistics(@RequestParam String appId);
 
 //    @PostMapping("/v1/open/gpt/count")
 //    ResponseEntity<String> count(@RequestBody ChatRequest request);

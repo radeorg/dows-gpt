@@ -57,6 +57,10 @@ public class GptLockEntity extends BaseEntity<GptLockEntity> {
     @Schema(description = "操作者ID")
     @Column(value = "operator_id")
     private Long operatorId;
+
+    @Schema(description = "逻辑删除 0未删除 1删除")
+    @Column(value = "deleted", isLogicDelete = true)
+    private Integer deleted;
 }
 
 
