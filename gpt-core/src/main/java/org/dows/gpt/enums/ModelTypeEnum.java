@@ -6,6 +6,7 @@ public enum ModelTypeEnum {
     DEEPSEEK_V3("deepseek-v3", "DeepSeek-V3","deepseek"),
     CHATGPT_4O("gpt-4o", "ChatGPT-4o","gpt"),
     LOCAL("local", "本地大模型",""),
+    QWEN("qwen", "通义千问","qwen"),
     ;
 
     private final String code;

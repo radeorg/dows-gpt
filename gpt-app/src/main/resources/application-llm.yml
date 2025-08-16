@@ -21,4 +21,9 @@ dows:
         api-url: https://gemini.google.com
         api-key: xxx
         model: gemini-pro
+      qwen:
+        enabled: true
+        api-url: https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions
+        api-key: xxx
+        model: qwen-plus
 
