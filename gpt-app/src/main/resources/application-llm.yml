@@ -9,7 +9,7 @@ dows:
       deepseek-v3:
         enabled: true
         api-url: https://api.deepseek.com/chat/completions
-        api-key: sk-878aecf04c534ac3ab3ba9b3a9a74e86
+        api-key: sk-5317b503f34d40c191c6ee9ea5aef146
         model: deepseek-chat
       openai:
         enabled: true
