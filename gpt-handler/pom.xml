@@ -25,6 +25,11 @@
             <artifactId>gpt-core</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>org.dows.cloud</groupId>
+            <artifactId>gpt-llm</artifactId>
+        </dependency>
+
         <!-- <dependency>
              <groupId>org.dows.cloud</groupId>
              <artifactId>gpt-api</artifactId>

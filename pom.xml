@@ -28,6 +28,10 @@
         <spring-ai.version>1.0.0-M6</spring-ai.version>
         <spring-cloud-dependencies.version>2024.0.1</spring-cloud-dependencies.version>
 
+        <knuddels.version>0.5.0</knuddels.version>
+        <alibaba.dashscope.version>2.11.0</alibaba.dashscope.version>
+        <doubao.version>0.1.151</doubao.version>
+
         <jdk.version>21</jdk.version>
     </properties>
 
@@ -43,6 +47,7 @@
         <module>gpt-rest</module>
         <module>gpt-feign</module>
         <module>gpt-api</module>
+        <module>gpt-llm</module>
     </modules>
 
     <dependencyManagement>
@@ -72,6 +77,12 @@
             </dependency>
 
             <dependency>
+                <artifactId>gpt-core</artifactId>
+                <groupId>org.dows.cloud</groupId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
                 <artifactId>gpt-cache</artifactId>
                 <groupId>org.dows.cloud</groupId>
                 <version>${project.version}</version>
@@ -95,12 +106,12 @@
                 <version>${project.version}</version>
             </dependency>
 
+
             <dependency>
-                <artifactId>gpt-core</artifactId>
                 <groupId>org.dows.cloud</groupId>
+                <artifactId>gpt-llm</artifactId>
                 <version>${project.version}</version>
             </dependency>
-
             <!-- <dependency>
                  <artifactId>gpt-entity</artifactId>
                  <groupId>org.dows.gpt</groupId>
@@ -150,6 +161,34 @@
                 <groupId>org.dows.cloud</groupId>
                 <artifactId>oss-api</artifactId>
                 <version>${dows-oss.version}</version>
+            </dependency>
+
+
+
+
+            <!-- openai token计算 -->
+            <dependency>
+                <groupId>com.knuddels</groupId>
+                <artifactId>jtokkit</artifactId>
+                <version>${knuddels.version}</version>
+            </dependency>
+            <!-- 通义千问模型sdk -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>dashscope-sdk-java</artifactId>
+                <version>${alibaba.dashscope.version}</version>
+            </dependency>
+            <!-- 智谱清言sdk -->
+            <dependency>
+                <groupId>cn.bigmodel.openapi</groupId>
+                <artifactId>oapi-java-sdk</artifactId>
+                <version>release-V4-2.0.2</version>
+            </dependency>
+            <!-- 豆包 -->
+            <dependency>
+                <groupId>com.volcengine</groupId>
+                <artifactId>volcengine-java-sdk-ark-runtime</artifactId>
+                <version>${doubao.version}</version>
             </dependency>
 
             <dependency>
