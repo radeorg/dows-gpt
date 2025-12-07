@@ -14,10 +14,16 @@
             <artifactId>gpt-boot</artifactId>
         </dependency>
 
-        <dependency>
+<!--        <dependency>
             <groupId>org.dows.cloud</groupId>
             <artifactId>oss-boot</artifactId>
             <version>1.0.1-SNAPSHOT</version>
+        </dependency>-->
+
+        <dependency>
+            <groupId>io.github.cdimascio</groupId>
+            <artifactId>dotenv-java</artifactId>
+            <version>3.2.0</version>
         </dependency>
 
         <dependency>

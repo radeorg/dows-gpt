@@ -9,8 +9,8 @@ public class ChatRequest {
     private String protocol;
     // 用户输入的内容
     private String content;
-    // [deepseek-v3,deepseek-r1]
-    private String modelType;
+    // 模型名称[deepseek-v3,deepseek-r1]
+    private String model;
     // 系统提示词
     private String prompt;
 

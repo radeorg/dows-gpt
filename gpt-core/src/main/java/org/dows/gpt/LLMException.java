@@ -1,6 +1,5 @@
 package org.dows.gpt;
 
-import org.dows.gpt.common.enums.ResponseEnum;
 import lombok.Getter;
 
 /**
@@ -24,7 +23,7 @@ public class LLMException extends RuntimeException {
 
     public LLMException(String message) {
         super(message);
-        this.code = ResponseEnum.ERROR.getCode();
+        //this.code = ResponseEnum.ERROR.getCode();
         this.message = message;
     }
 

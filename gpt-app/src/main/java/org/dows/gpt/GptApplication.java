@@ -1,5 +1,6 @@
 package org.dows.gpt;
 
+import io.github.cdimascio.dotenv.Dotenv;
 import lombok.extern.slf4j.Slf4j;
 import org.dows.rade.util.PathUtil;
 import org.dromara.autotable.springboot.EnableAutoTable;
@@ -10,7 +11,10 @@ import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.scheduling.annotation.EnableAsync;
 
+import java.io.File;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.TimeZone;
 
 @Slf4j
 @EnableAutoTable // 开启自动建表
@@ -25,6 +29,19 @@ public class GptApplication {
     private static ClassLoader mainThreadClassLoader;
 
     public static void main(String[] args) {
+        // 设置JVM默认时区
+        // 在应用启动时设置JVM默认时区
+        System.setProperty("user.timezone", "Asia/Shanghai");
+        TimeZone.setDefault(TimeZone.getTimeZone("Asia/Shanghai"));
+        System.out.println(LocalDateTime.now());
+        String property = System.getProperty("user.home");
+        Dotenv dotenv = Dotenv.configure()
+                .directory(property + File.separator + "env") // 指定 env 目录路径
+                .ignoreIfMissing()
+                .load();
+        // 将 .env 文件中的键值对设为系统属性
+        dotenv.entries().forEach(entry -> System.setProperty(entry.getKey(), entry.getValue()));
+
         mainThreadClassLoader = Thread.currentThread().getContextClassLoader();
         context = SpringApplication.run(GptApplication.class, args);
     }

@@ -41,11 +41,6 @@
          </dependency>-->
 
         <dependency>
-            <groupId>org.dows.cloud</groupId>
-            <artifactId>oss-api</artifactId>
-        </dependency>
-
-        <dependency>
             <groupId>org.dows.framework</groupId>
             <artifactId>oss-boot</artifactId>
         </dependency>

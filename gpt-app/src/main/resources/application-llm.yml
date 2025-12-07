@@ -4,7 +4,7 @@ dows:
       deepseek-r1:
         enabled: true
         api-url: https://api.deepseek.com/chat/completions
-        api-key: sk-e31cfdf43187486db26adba65bd34839
+        api-key: ${DEEPSEEK_API_KEY}
         model: deepseek-reasoner
       deepseek-v3:
         enabled: true

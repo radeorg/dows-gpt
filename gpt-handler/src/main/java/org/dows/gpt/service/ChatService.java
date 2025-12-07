@@ -13,6 +13,8 @@ import org.dows.gpt.request.ChatMessage;
 import org.dows.gpt.request.ChatRequest;
 import org.dows.gpt.request.ChatSession;
 import org.dows.gpt.response.GptLockResponse;
+import org.dows.gpt.service.ChatMessageService;
+import org.dows.gpt.service.ChatSessionService;
 import org.dows.gpt.utils.TikTokenUtils;
 import org.dows.oss.api.FileUploaderApi;
 import org.springframework.stereotype.Service;
@@ -88,7 +90,7 @@ public class ChatService {
         }
 
 
-        String modelType = request.getModelType();
+        String modelType = request.getModel();
         // 会话历史
         //ChatSession session = getOrCreateSession(request);
         //List<ChatMessage> history = chatMessageService.findLastMessages(session.getId(), 10);
@@ -173,7 +175,7 @@ public class ChatService {
         }
         ChatSession session = new ChatSession();
         session.setUserId(request.getUserId());
-        session.setModelType(request.getModelType());
+        session.setModelType(request.getModel());
         chatSessionService.insert(session);
         return session;
     }
