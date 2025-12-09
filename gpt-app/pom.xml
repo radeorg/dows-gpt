@@ -14,11 +14,16 @@
             <artifactId>gpt-boot</artifactId>
         </dependency>
 
-<!--        <dependency>
+        <dependency>
             <groupId>org.dows.cloud</groupId>
             <artifactId>oss-boot</artifactId>
             <version>1.0.1-SNAPSHOT</version>
-        </dependency>-->
+        </dependency>
+
+        <dependency>
+            <groupId>org.dows.framework</groupId>
+            <artifactId>oss-tencent</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>io.github.cdimascio</groupId>

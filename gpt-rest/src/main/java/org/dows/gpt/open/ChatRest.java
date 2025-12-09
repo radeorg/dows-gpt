@@ -101,8 +101,8 @@ public class ChatRest implements ChatApi {
      * @param request 客户端的提问内容
      * @return SSE流式响应
      */
-    @GetMapping(value = "/sse/deepseek", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-    public Flux<ServerSentEvent<String>> streamChat(@RequestParam ChatRequest request) {
+    //@GetMapping(value = "/sse/deepseek", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    public Flux<ServerSentEvent<String>> streamChat(ChatRequest request) {
 
         return deepSeekService.callDeepSeekStreaming(request)
                 .filter(content -> !content.isEmpty())

@@ -2,18 +2,24 @@ package org.dows.llm.deepseek;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.annotation.PostConstruct;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.dows.gpt.request.ChatRequest;
 import org.dows.gpt.yml.LlmClientConfig;
 import org.dows.gpt.yml.LlmClientsProperties;
+import org.springframework.core.io.buffer.DataBuffer;
+import org.springframework.core.io.buffer.DataBufferUtils;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StreamUtils;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -21,15 +27,17 @@ import java.util.Map;
 @RequiredArgsConstructor
 @Service
 public class DeepSeekStreamingService {
-    private final WebClient webClient;
-    private final ObjectMapper objectMapper = new ObjectMapper();
-    private  LlmClientsProperties llmClientsProperties;
+    private WebClient webClient;
+    private final ObjectMapper objectMapper;
+    private final LlmClientsProperties llmClientsProperties;
 
-    public DeepSeekStreamingService(LlmClientsProperties llmClientsProperties) {
-        this.llmClientsProperties = llmClientsProperties;
-        LlmClientConfig deepSeekConfig = this.llmClientsProperties.getClients().get("deepseek-v3");
+    @PostConstruct
+    public void init() {
+        //LlmClientsProperties lmClientsProperties = llmClientsProperties;
+        LlmClientConfig deepSeekConfig = llmClientsProperties.getClients().get("deepseek-v3");
         // 构建响应式WebClient
         this.webClient = WebClient.builder()
+                .defaultHeader("Accept-Charset", "UTF-8")
                 .baseUrl(deepSeekConfig.getApiUrl())
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .defaultHeader("Authorization", "Bearer " + deepSeekConfig.getApiKey())
@@ -56,8 +64,26 @@ public class DeepSeekStreamingService {
         return webClient.post()
                 .body(Mono.just(requestBody), Map.class)
                 // 关键：以文本流的方式接收响应（text/event-stream格式）
+                .header("Accept-Charset", "UTF-8")
                 .retrieve()
                 .bodyToFlux(String.class)
+                // 关键修改：使用DataBuffer而非String
+//                .bodyToFlux(DataBuffer.class)
+//                // 手动转换DataBuffer为UTF-8字符串
+//                .map(dataBuffer -> {
+//                    try {
+//                        // 使用UTF-8明确编码
+//                        return StreamUtils.copyToString(dataBuffer.asInputStream(), java.nio.charset.StandardCharsets.UTF_8);
+//                    } catch (IOException e) {
+//                        log.error("数据转换失败", e);
+//                        return "";
+//                    } finally {
+//                        // 释放DataBuffer资源
+//                        DataBufferUtils.release(dataBuffer);
+//                    }
+//                })
+//                // 按行分割流（解决可能的多行合并问题）
+//                .flatMap(line -> Flux.fromArray(line.split("\\n")))
                 // 过滤空行和结束标记（[DONE]）
                 .filter(line -> !line.isEmpty() && !line.equals("[DONE]"))
                 // 解析每行JSON，提取回复内容

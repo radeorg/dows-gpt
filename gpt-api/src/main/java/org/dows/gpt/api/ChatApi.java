@@ -25,7 +25,8 @@ public interface ChatApi {
 
     //    @PostMapping("/v1/open/gpt/count")
 //    ResponseEntity<String> count(@RequestBody ChatRequest request);
-    @PostMapping(value = "/v1/open/llm/chat/sse", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-    Flux<ServerSentEvent<String>> streamChat(@RequestBody ChatRequest request);
+    //@PostMapping(value = "/v1/open/llm/chat/sse", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    @GetMapping(value = "/v1/open/llm/sse/chat", produces = MediaType.TEXT_EVENT_STREAM_VALUE + ";charset=UTF-8")
+    Flux<ServerSentEvent<String>> streamChat(ChatRequest request);
 
 }

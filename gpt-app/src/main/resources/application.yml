@@ -10,13 +10,18 @@ server:
   compression:
     enabled: true
     mime-types: application/json,application/xml,text/html,text/plain
+  servlet:
+    encoding:
+      charset: utf-8
+      force: true
+      enabled: true
 
 spring:
   application:
     name: dows-gpt
     appId: 1
   profiles:
-    include: mysql,apidoc,mybatis,caffeine,ai,thread,hrm,oss,feign,llm
+    include: mysql,apidoc,mybatis,caffeine,ai,thread,hrm,oss,feign,llm,mineru
     active: dev
 
   jackson:
